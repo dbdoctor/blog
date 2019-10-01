@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+<title>DB Doctor Main</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="stylesheet" href="../dbstyle.css"/>
+</head><body>
+
+    <!-- #BeginHeaderInitial -->
+    <header role="banner" class="header">
+      <div class="container">
+        <!-- #BeginLogo -->
+        <a href="/" class="logo text-hide">DB Doctor</a>
+        <!-- #EndLogo -->
+      </div>
+    </header>
+    <!-- #EndHeaderInitial -->
+
+
+
+    <!-- #EndHeader -->
+
+
+
+<div id="shell">
+<div id="content">
+
+
+<div class="post">
+<div class="posthead">
+Tip #4
+</div>
+<div class="entryComment">20/8/2019</div>
+<div class="entry">
+
+<ul>
+
+<li>
+<dl>
+<dt><p class="icon_t">Tip</p></dt>
+<dd class="time"></dd>
+<dd ><h2>How to detect which process is using a particular TCP port</h2> </dd>
+</dd>
+</dl>
+</li>
+</ul>
+</div> <!--entry-->
+
+<div class="tip">
+<ul>
+<li>
+<dl>
+<dd class="lastChild">The following are ways that you can use to find out which process is using a particular <br>
+TCP port depending on your platform.
+
+<ul>
+<li style="list-style:circle">Windows </li>
+
+<pre class="prettyout">
+C:\Program Files\IBM\SQLLIB\BIN>netstat -ano | find "50000"
+  TCP    0.0.0.0:50000          0.0.0.0:0           LISTENING       3332
+  TCP    [::]:50000             [::]:0              LISTENING       3332
+</pre>
+
+<li style="list-style:circle">Linux </li>
+As root user, issue "netstat -anp" or fuser:
+<pre class="prettyout">
+yaba:/opt/ibm/db2/V9.7/instance # netstat -anp|grep 60015
+tcp  0      0 0.0.0.0:60015  0.0.0.0:*   LISTEN  5948/db2sysc 0
+
+db2v10@yaba:/home/db2v10> fuser 60015/tcp
+60015/tcp:            5948
+</pre>
+
+<li style="list-style:circle">AIX </li>
+As root user, use lsof:
+<pre class="prettyout">
+# /usr/sbin/lsof -i :61001
+</pre>
+If you don't have lsof installed:
+<pre class="prettyout">
+# cat port.sh
+if [[ $# -ne 1 ]]; then
+echo $0 PORTNUM
+exit 1
+fi
+TCPCB=`netstat -Aan|grep $1|awk '{print $1}'`
+echo "sockinfo $TCPCB tcpcb"|kdb
+
+# ./port.sh 60888
+...
+              SLOT NAME     STATE      PID    PPID          ADSPACE  CL #THS
+
+pvproc+090800  578*db2sysc  ACTIVE 242006E 26C007A 00000009658D7510   0 000E
+
+# echo "hcal 242006E"|kdb|grep -i value
+Value hexa: 0242006E          Value decimal: 37879918
+
+</pre>
+
+</ul>
+
+</dd>
+</dl>
+</li>
+</ul>
+</div> <!--tip-->
+
+</div> <!-- post -->
+
+
+</div>  <!-- content -->
+
+
+<div id="sidebar">
+<!-- get_started_with_css_3 -->
+<div id="linkcat-2" class="widget widget_links"><h4>DB Doctor</h4>
+
+<ul class="xoxo blogroll">
+<li><a href="../health/index.html" title="Health"><img src="../img/health.png" alt="Health" title="Health"> Health Check</a>
+Check DB2 health</li>
+<li><a href="../tips/index.html" title="Tips "><img src="../img/tips.png" alt="Tips" title="Tips"> Tips</a>
+Tips that you can learn</li>
+<li><a href="../articles/index.html" title="Articles"><img src="../img/articles.png" alt="Articles" title="Articles"> Articles</a>
+Articles/Hands on</li>
+<li><a href="../about.html" title="About"><img src="../img/about.png" alt="About" title="Abourt "> About</a>
+About DB Doctor </li>
+
+</ul>
+</div>
+
+<div id="search" class="widgetsch">
+<script>
+  (function() {
+    var cx = '000443088013040956876:lixtvq1nyzy';
+    var gcse = document.createElement('script');
+    gcse.type = 'text/javascript';
+    gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+        '//cse.google.com/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+<gcse:search></gcse:search>
+
+</div> <!-- search -->
+</div> <!-- sidebar -->
+
+</div>  <!-- shell -->
+
+</body>
+</html>

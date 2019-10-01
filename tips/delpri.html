@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+<title>DB Doctor Main</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="stylesheet" href="../dbstyle.css"/>
+</head><body>
+
+    <!-- #BeginHeaderInitial -->
+    <header role="banner" class="header">
+      <div class="container">
+        <!-- #BeginLogo -->
+        <a href="/" class="logo text-hide">DB Doctor</a>
+        <!-- #EndLogo -->
+      </div>
+    </header>
+    <!-- #EndHeaderInitial -->
+
+
+
+    <!-- #EndHeader -->
+
+
+
+<div id="shell">
+<div id="content">
+
+
+<div class="post">
+<div class="posthead">
+Tip #3
+</div>
+<div class="entryComment">9/5/2019</div>
+<div class="entry">
+
+<ul>
+
+<li>
+<dl>
+<dt><p class="icon_t">Tip</p></dt>
+<dd class="time"></dd>
+<dd ><h2>Use delprioritychar to suppress row delimiter in a string</h2> </dd>
+</dd>
+</dl>
+</li>
+</ul>
+</div> <!--entry-->
+
+<div class="tip">
+<ul>
+<li>
+<dl>
+<dd class="lastChild">If your string in your DEL file to import include a row delimiter, this will cause trouble.<br>
+For example, the following is a DEL file to import has two rows:
+<pre class="prettyprint">
+C:\Program Files\IBM\SQLLIB\BIN>type t1.del
+1,"abc",123
+2,"de
+f",456
+</pre>
+
+Note the second column of second row include a row delimiter.
+
+This will cause trouble when importing:
+
+<pre class="prettyout">
+>db2 import from t1.del of del insert into t1
+SQL3109N  The utility is beginning to load data from file "t1.del".
+
+SQL3137W  Row "2" is too short.  At least one input value being loaded to a
+non-nullable column is missing.  The row was not loaded.
+
+SQL3120W  The field value in row "3" and column "1" cannot be converted to a
+INTEGER value, but the target column is not nullable.  The row was not loade
+
+SQL3110N  The utility has completed processing.  "3" rows were read from the
+input file.
+
+SQL3221W  ...Begin COMMIT WORK. Input Record Count = "3".
+
+SQL3222W  ...COMMIT of any database changes was successful.
+
+SQL3149N  "3" rows were processed from the input file.  "1" rows were
+successfully inserted into the table.  "2" rows were rejected.
+
+
+Number of rows read         = 3
+Number of rows skipped      = 0
+Number of rows inserted     = 1
+Number of rows updated      = 0
+Number of rows rejected     = 2
+Number of rows committed    = 3
+</pre>
+In this case, you need to use "modified by delprioritychar" to put the priority of char<br>ahead of row delimiter.
+<pre class="prettyout">
+>db2 import from t1.del of del modified by delprioritychar insert into t1
+SQL3109N  The utility is beginning to load data from file "t1.del".
+
+SQL3110N  The utility has completed processing.  "2" rows were read from the
+input file.
+
+SQL3221W  ...Begin COMMIT WORK. Input Record Count = "2".
+
+SQL3222W  ...COMMIT of any database changes was successful.
+
+SQL3149N  "2" rows were processed from the input file.  "2" rows were
+successfully inserted into the table.  "0" rows were rejected.
+
+
+Number of rows read         = 2
+Number of rows skipped      = 0
+Number of rows inserted     = 2
+Number of rows updated      = 0
+Number of rows rejected     = 0
+Number of rows committed    = 2
+</pre>
+
+
+</dd>
+</dl>
+</li>
+</ul>
+</div> <!--tip-->
+
+</div> <!-- post -->
+
+
+</div>  <!-- content -->
+
+
+<div id="sidebar">
+<!-- get_started_with_css_3 -->
+<div id="linkcat-2" class="widget widget_links"><h4>DB Doctor</h4>
+
+<ul class="xoxo blogroll">
+<li><a href="../health/index.html" title="Health"><img src="../img/health.png" alt="Health" title="Health"> Health Check</a>
+Check DB2 health</li>
+<li><a href="../tips/index.html" title="Tips "><img src="../img/tips.png" alt="Tips" title="Tips"> Tips</a>
+Tips that you can learn</li>
+<li><a href="../articles/index.html" title="Articles"><img src="../img/articles.png" alt="Articles" title="Articles"> Articles</a>
+Articles/Hands on</li>
+<li><a href="../about.html" title="About"><img src="../img/about.png" alt="About" title="Abourt "> About</a>
+About DB Doctor </li>
+
+</ul>
+</div>
+
+<div id="search" class="widgetsch">
+<script>
+  (function() {
+    var cx = '000443088013040956876:lixtvq1nyzy';
+    var gcse = document.createElement('script');
+    gcse.type = 'text/javascript';
+    gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+        '//cse.google.com/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+<gcse:search></gcse:search>
+
+</div> <!-- search -->
+</div> <!-- sidebar -->
+
+</div>  <!-- shell -->
+
+</body>
+</html>

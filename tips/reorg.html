@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+<title>DB Doctor Main</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="stylesheet" href="../dbstyle.css"/>
+</head><body>
+
+    <!-- #BeginHeaderInitial -->
+    <header role="banner" class="header">
+      <div class="container">
+        <!-- #BeginLogo -->
+        <a href="/" class="logo text-hide">DB Doctor</a>
+        <!-- #EndLogo -->
+      </div>
+    </header>
+    <!-- #EndHeaderInitial -->
+
+
+
+    <!-- #EndHeader -->
+
+
+
+<div id="shell">
+<div id="content">
+
+
+<div class="post">
+<div class="posthead">
+Tip #2
+</div>
+<div class="entryComment">1/7/2019</div>
+<div class="entry">
+
+<ul>
+
+<li>
+<dl>
+<dt><p class="icon_t">Tip</p></dt>
+<dd class="time"></dd>
+<dd ><h2>After reorging a table, do you need to reorg its indexes?</h2> </dd>
+</dd>
+</dl>
+</li>
+</ul>
+</div> <!--entry-->
+
+<div class="tip">
+<ul>
+<li>
+<dl>
+<dd class="lastChild">
+That depends on whether your REORG TABLE is offline reorg or online(aka. INPLACE) reorg.<br><br>
+Following offline table reorg, no need to reorg its indexes, because the last phase of offline<br>
+table reorg will rebuild its indexes anyway.<br><br>
+However, online table reorg does not rebuild the indexes. Therefore
+ after the completion of <br>online table reorg, REORG INDEXES is recommended.
+<br>
+
+
+
+</dd>
+</dl>
+</li>
+</ul>
+</div> <!--tip-->
+
+</div> <!-- post -->
+
+
+</div>  <!-- content -->
+
+
+<div id="sidebar">
+<!-- get_started_with_css_3 -->
+<div id="linkcat-2" class="widget widget_links"><h4>DB Doctor</h4>
+
+<ul class="xoxo blogroll">
+<li><a href="../health/index.html" title="Health"><img src="../img/health.png" alt="Health" title="Health"> Health Check</a>
+Check DB2 health</li>
+<li><a href="../tips/index.html" title="Tips "><img src="../img/tips.png" alt="Tips" title="Tips"> Tips</a>
+Tips that you can learn</li>
+<li><a href="../articles/index.html" title="Articles"><img src="../img/articles.png" alt="Articles" title="Articles"> Articles</a>
+Articles/Hands on</li>
+<li><a href="../about.html" title="About"><img src="../img/about.png" alt="About" title="Abourt "> About</a>
+About DB Doctor </li>
+
+</ul>
+</div>
+
+<div id="search" class="widgetsch">
+<script>
+  (function() {
+    var cx = '000443088013040956876:lixtvq1nyzy';
+    var gcse = document.createElement('script');
+    gcse.type = 'text/javascript';
+    gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+        '//cse.google.com/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+<gcse:search></gcse:search>
+
+</div> <!-- search -->
+</div> <!-- sidebar -->
+
+</div>  <!-- shell -->
+
+</body>
+</html>

@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+<title>DB Doctor Main</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="stylesheet" href="../dbstyle.css"/>
+</head><body>
+
+    <!-- #BeginHeaderInitial -->
+    <header role="banner" class="header">
+      <div class="container">
+        <!-- #BeginLogo -->
+        <a href="/" class="logo text-hide">DB Doctor</a>
+        <!-- #EndLogo -->
+      </div>
+    </header>
+    <!-- #EndHeaderInitial -->
+
+
+
+    <!-- #EndHeader -->
+
+
+
+<div id="shell">
+<div id="content">
+
+
+<div class="post">
+<div class="posthead">
+Tip #1
+</div>
+<div class="entryComment">1/3/2019</div>
+<div class="entry">
+
+<ul>
+
+<li>
+<dl>
+<dt><p class="icon_t">Tip</p></dt>
+<dd class="time"></dd>
+<dd ><h2>db2iupdt may appear to hang if your instance user profile needs user interaction to complete.</h2> </dd>
+</dd>
+</dl>
+</li>
+</ul>
+</div> <!--entry-->
+
+<div class="tip">
+<ul>
+<li>
+<dl>
+<dd class="lastChild">Your instance user may have .profile in its home directory. The following two scenarios <br> will cause trouble:<br>
+1. Your profile needs user interaction to complete <br>
+2. Your profile opens a new shell <br>
+<br>
+As an example, your .profile may have the following line:
+<pre class="prettyprint">
+PATH=/usr/bin:/etc:/usr/sbin:/usr/ucb:$HOME/bin:/usr/bin/X11:/sbin:.
+
+# The following three lines have been added by IBM DB2 instance utilities
+if [ -f /home/hwang/sqllib/db2profile ]; then
+    . /home/hwang/sqllib/db2profile
+fi
+
+echo "Enter some text : \c"
+read text
+echo "You entered: $text"
+</pre>
+
+When the instance user logins, the user will need to input something:
+<pre class="prettyout">
+login as: hwang
+hwang@host1's password:
+Enter some text : Yes
+You entered: Yes
+</pre>
+
+This is causing problems, though, when you issue db2iupdt.
+<pre class="prettyout">
+root@host1:/opt/IBM/db2/V9.7FP8/instance # ./db2iupdt hwang
+Enter some text : r
+You entered: r
+Enter some text : r
+You entered: r
+</pre>
+db2iupdt command apears to hang and never finishes.<br>
+This is because db2iupdt executes the profile silently and expects it to complete without user intervention.<br>
+The following output from <b>proctree</b>(or ptree) shows it starts a new shell and discard the output:
+<pre class="prettyout">
+24772726    /bin/bsh ./db2iupdt hwang
+  32768126    /bin/bsh /opt/IBM/db2/V9.7FP8/instance/db2iexec -n hwang
+                                              /usr/bin/date >> /home
+    7995592    -ksh -c . /home/hwang/sqllib/db2profile 1>/dev/null 2>
+                                              /dev/null; /usr/bin/date
+</pre>
+
+<br>
+Similar problem if you open a new shell in your profile:
+
+<pre class="prettyprint">
+PATH=/usr/bin:/etc:/usr/sbin:/usr/ucb:$HOME/bin:/usr/bin/X11:/sbin:.
+
+# The following three lines have been added by IBM DB2 instance utilities
+if [ -f /home/hwang/sqllib/db2profile ]; then
+    . /home/hwang/sqllib/db2profile
+fi
+
+bash
+</pre>
+
+</dd>
+</dl>
+</li>
+</ul>
+</div> <!--tip-->
+
+</div> <!-- post -->
+
+
+</div>  <!-- content -->
+
+
+<div id="sidebar">
+<!-- get_started_with_css_3 -->
+<div id="linkcat-2" class="widget widget_links"><h4>DB Doctor</h4>
+
+<ul class="xoxo blogroll">
+<li><a href="../health/index.html" title="Health"><img src="../img/health.png" alt="Health" title="Health"> Health Check</a>
+Check DB2 health</li>
+<li><a href="../tips/index.html" title="Tips "><img src="../img/tips.png" alt="Tips" title="Tips"> Tips</a>
+Tips that you can learn</li>
+<li><a href="../articles/index.html" title="Articles"><img src="../img/articles.png" alt="Articles" title="Articles"> Articles</a>
+Articles/Hands on</li>
+<li><a href="../about.html" title="About"><img src="../img/about.png" alt="About" title="Abourt "> About</a>
+About DB Doctor </li>
+
+</ul>
+</div>
+
+<div id="search" class="widgetsch">
+<script>
+  (function() {
+    var cx = '000443088013040956876:lixtvq1nyzy';
+    var gcse = document.createElement('script');
+    gcse.type = 'text/javascript';
+    gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+        '//cse.google.com/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+<gcse:search></gcse:search>
+
+</div> <!-- search -->
+</div> <!-- sidebar -->
+
+</div>  <!-- shell -->
+
+</body>
+</html>
